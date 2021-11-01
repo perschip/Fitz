@@ -1,0 +1,15 @@
+name: Fitz
+version: 1.0-BETA
+main: net.naturva.morphie.fitz.Fitz
+author: Morphie
+api-version: 1.13
+depend: [DiscordBotAPI]
+commands:
+  discord:
+    description: Main command for the in-game.
+    usage: /<command>
+    aliases: [fitz]
+  verify:
+    description: Main command to verify discord account.
+    usage: /<command>
+    aliases: [dv]

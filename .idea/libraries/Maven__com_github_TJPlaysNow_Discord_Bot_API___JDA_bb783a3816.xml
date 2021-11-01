@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.TJPlaysNow:Discord-Bot-API---JDA:bb783a3816">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/TJPlaysNow/Discord-Bot-API---JDA/bb783a3816/Discord-Bot-API---JDA-bb783a3816.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/TJPlaysNow/Discord-Bot-API---JDA/bb783a3816/Discord-Bot-API---JDA-bb783a3816-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/TJPlaysNow/Discord-Bot-API---JDA/bb783a3816/Discord-Bot-API---JDA-bb783a3816-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
