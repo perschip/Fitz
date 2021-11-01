@@ -1,6 +1,6 @@
-package net.naturva.morphie.fitz.events;
+package com.smpultd.morphie.fitz.events;
 
-import net.naturva.morphie.fitz.Fitz;
+import com.smpultd.morphie.fitz.Fitz;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,11 +15,11 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class playerDataFileEvents implements Listener {
+public class PlayerDataFileEvents implements Listener {
 
     private Fitz plugin;
 
-    public playerDataFileEvents(Fitz plugin) {
+    public PlayerDataFileEvents(Fitz plugin) {
         this.plugin = plugin;
     }
 

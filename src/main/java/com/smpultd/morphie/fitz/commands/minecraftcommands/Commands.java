@@ -1,13 +1,13 @@
-package net.naturva.morphie.fitz.commands.minecraftcommands;
+package com.smpultd.morphie.fitz.commands.minecraftcommands;
 
+import com.smpultd.morphie.fitz.Fitz;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.md_5.bungee.api.ChatColor;
-import net.naturva.morphie.fitz.Fitz;
-import net.naturva.morphie.fitz.events.playerDataFileEvents;
-import net.naturva.morphie.fitz.files.playerDataFileMethods;
+import com.smpultd.morphie.fitz.events.PlayerDataFileEvents;
+import com.smpultd.morphie.fitz.files.Playerdatafilemethods;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,8 +31,8 @@ public class Commands implements CommandExecutor {
         Player player = (Player)sender;
         Guild guild = this.plugin.jda.getGuildById(this.plugin.getConfig().getString("Guild"));
         if (cmd.getName().equalsIgnoreCase("verify")) {
-            if (new playerDataFileMethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aYou have already verified your account! &8(&7" + new playerDataFileMethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "&8)"));
+            if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aYou have already verified your account! &8(&7" + new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "&8)"));
                 return true;
             }
             if (!this.plugin.uuidUserCode.containsKey(player.getUniqueId())) {
@@ -58,13 +58,13 @@ public class Commands implements CommandExecutor {
             }
             String prefix = this.plugin.chat.getPlayerPrefix(player);
             String format = ChatColor.translateAlternateColorCodes('&', prefix + player.getDisplayName());
-            new playerDataFileEvents(this.plugin).addData(player, discordID, member.getUser().getName(), format);
-            new playerDataFileMethods(this.plugin).setBoolean(player, player.getUniqueId(), "Linked", true);
-            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftName", player.getName());
-            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
-            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "DiscordName", member.getUser().getName() + "#" + member.getUser().getDiscriminator());
-            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "DiscordId", this.plugin.uuidDiscordId.get(player.getUniqueId()));
-            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "DiscordRole", member.getRoles().get(0).toString());
+            new PlayerDataFileEvents(this.plugin).addData(player, discordID, member.getUser().getName(), format);
+            new Playerdatafilemethods(this.plugin).setBoolean(player, player.getUniqueId(), "Linked", true);
+            new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftName", player.getName());
+            new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
+            new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "DiscordName", member.getUser().getName() + "#" + member.getUser().getDiscriminator());
+            new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "DiscordId", this.plugin.uuidDiscordId.get(player.getUniqueId()));
+            new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "DiscordRole", member.getRoles().get(0).toString());
             this.plugin.uuidDiscordId.remove(player.getUniqueId());
             this.plugin.uuidUserCode.remove(player.getUniqueId());
             Role role = guild.getRolesByName("Verified", false).get(0);
@@ -86,38 +86,38 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8---------- [&3&lDiscord&8] ----------"));
                 return true;
             } else if (args[0].equals("resync")) {
-                if (new playerDataFileMethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
-                    String discordID = new playerDataFileMethods(this.plugin).getString(player.getUniqueId(), "DiscordId");
+                if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
+                    String discordID = new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "DiscordId");
                     Member member = guild.getMemberById(discordID);
                     if (member == null) {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aCannot find your discord account! Are you on our server? (/discord)"));
                         return true;
                     } else if (this.plugin.perms.getPrimaryGroup(player).equals("default")) {
                         if (guild.getRolesByName(player.getName(), false).get(0) != null) {
-                            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
-                            String rank = new playerDataFileMethods(this.plugin).getString(player.getUniqueId(), "MinecraftRank");
+                            new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
+                            String rank = new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "MinecraftRank");
                             int intValue = Integer.parseInt(this.plugin.getConfig().getString(rank),16);
                             Color aColor = new Color( intValue );
                             Role role = guild.getRolesByName(player.getName(), false).get(0);
                             role.getManager().setColor(aColor).complete();
-                            new playerDataFileMethods(this.plugin).setBoolean(player, player.getUniqueId(), "DiscordRoleCreated", true);
+                            new Playerdatafilemethods(this.plugin).setBoolean(player, player.getUniqueId(), "DiscordRoleCreated", true);
 //                            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "DiscordRole", member.getRoles().get(0).toString());
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aResync succesfull! &8(&7" + member.getUser().getName() + "#" + member.getUser().getDiscriminator() + "&8)"));
                             return true;
                         } else {
-                            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
+                            new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
 //                            new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "DiscordRole", member.getRoles().get(0).toString());
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aResync succesfull! &8(&7" + member.getUser().getName() + member.getUser().getDiscriminator() + "&8)"));
                             return true;
                         }
                     } else {
-                        new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
-                        String rank = new playerDataFileMethods(this.plugin).getString(player.getUniqueId(), "MinecraftRank");
+                        new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
+                        String rank = new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "MinecraftRank");
                         int intValue = Integer.parseInt(this.plugin.getConfig().getString(rank),16);
                         Color aColor = new Color( intValue );
                         Role role = guild.getRolesByName(player.getName(), false).get(0);
                         role.getManager().setColor(aColor).complete();
-                        new playerDataFileMethods(this.plugin).setBoolean(player, player.getUniqueId(), "DiscordRoleCreated", true);
+                        new Playerdatafilemethods(this.plugin).setBoolean(player, player.getUniqueId(), "DiscordRoleCreated", true);
 //                        new playerDataFileMethods(this.plugin).setString(player, player.getUniqueId(), "DiscordRole", member.getRoles().get(0).toString());
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aResync succesfull! &8(&7" + member.getUser().getName() + "#" +  member.getUser().getDiscriminator() + "&8)"));
                         return true;

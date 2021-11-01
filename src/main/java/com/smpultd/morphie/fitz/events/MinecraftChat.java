@@ -1,5 +1,6 @@
-package net.naturva.morphie.fitz.events;
+package com.smpultd.morphie.fitz.events;
 
+import com.smpultd.morphie.fitz.Fitz;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -8,12 +9,10 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.RoleAction;
 import net.md_5.bungee.api.ChatColor;
-import net.naturva.morphie.fitz.Fitz;
-import net.naturva.morphie.fitz.files.playerDataFileMethods;
+import com.smpultd.morphie.fitz.files.Playerdatafilemethods;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -37,22 +36,22 @@ public class MinecraftChat extends ListenerAdapter implements Listener {
         String name = p.getName();
         TextChannel channel = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
         Guild guild = this.plugin.jda.getGuildById(this.plugin.getConfig().getString("Guild"));
-        if (new playerDataFileMethods(this.plugin).getBoolean(p.getUniqueId(), "Linked") == true) {
-            if (new playerDataFileMethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated") == false) {
-                if (new playerDataFileMethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank") == "Member") {
+        if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "Linked") == true) {
+            if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated") == false) {
+                if (new Playerdatafilemethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank") == "Member") {
                     channel.sendMessage("**" + p.getName() + "**" + " **»** " + msg).queue();
                 } else {
-                    String rank = new playerDataFileMethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank");
+                    String rank = new Playerdatafilemethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank");
                     int intValue = Integer.parseInt(this.plugin.getConfig().getString(rank),16);
                     Color aColor = new Color( intValue );
                     RoleAction roleAction1 = guild.createRole();
                     roleAction1.setName(name);
                     roleAction1.setColor(aColor);
                     Role role = roleAction1.complete();
-                    new playerDataFileMethods(this.plugin).setBoolean(p, p.getUniqueId(), "DiscordRoleCreated", true);
+                    new Playerdatafilemethods(this.plugin).setBoolean(p, p.getUniqueId(), "DiscordRoleCreated", true);
                     channel.sendMessage(role.getAsMention() + " **»** " + msg).queue();
                 }
-            } else if (new playerDataFileMethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank") == "Member") {
+            } else if (new Playerdatafilemethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank") == "Member") {
                 channel.sendMessage("**" + p.getName() + "**" + " **»** " + msg).queue();
             } else {
                 Role role = guild.getRolesByName(p.getName(), false).get(0);
@@ -75,8 +74,8 @@ public class MinecraftChat extends ListenerAdapter implements Listener {
         String userName = user.getName();
         String discordID = user.getId();
 
-        if (new playerDataFileMethods(this.plugin).checkDiscordFile(discordID).exists()) {
-            String format = new playerDataFileMethods(this.plugin).getDiscordString(discordID, "MinecraftFormat");
+        if (new Playerdatafilemethods(this.plugin).checkDiscordFile(discordID).exists()) {
+            String format = new Playerdatafilemethods(this.plugin).getDiscordString(discordID, "MinecraftFormat");
             Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bD&8] " + format + " &8» &f" + message));
         } else {
             Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7[&bD&7] &7" + userName + " &8» &f" + message));

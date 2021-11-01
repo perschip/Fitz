@@ -1,6 +1,6 @@
-package net.naturva.morphie.fitz.files;
+package com.smpultd.morphie.fitz.files;
 
-import net.naturva.morphie.fitz.Fitz;
+import com.smpultd.morphie.fitz.Fitz;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -9,10 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-public class playerDataFileMethods {
+public class Playerdatafilemethods {
     private Fitz plugin;
 
-    public playerDataFileMethods(Fitz plugin) {
+    public Playerdatafilemethods(Fitz plugin) {
         this.plugin = plugin;
     }
 

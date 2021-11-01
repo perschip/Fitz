@@ -1,12 +1,12 @@
-package net.naturva.morphie.fitz.commands.discordcommands;
+package com.smpultd.morphie.fitz.commands.discordcommands;
 
+import com.smpultd.morphie.fitz.Fitz;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.naturva.morphie.fitz.Fitz;
-import net.naturva.morphie.fitz.files.playerDataFileMethods;
+import com.smpultd.morphie.fitz.files.Playerdatafilemethods;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -35,8 +35,8 @@ public class DiscordLinkCommand extends ListenerAdapter {
                 e.getChannel().sendMessage(":no_entry: I cannot find that user on the server currently! *(Make sure you're connected to the server!)*").queue();
                 return;
             }
-            if (new playerDataFileMethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
-                e.getChannel().sendMessage(":no_entry: You have already verified your account! **(**" + new playerDataFileMethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "**)**").queue();
+            if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
+                e.getChannel().sendMessage(":no_entry: You have already verified your account! **(**" + new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "**)**").queue();
                 return;
             }
             String randomCode = new Random().nextInt(8000)+2000+"NA";

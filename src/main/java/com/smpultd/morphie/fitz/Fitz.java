@@ -1,5 +1,6 @@
-package net.naturva.morphie.fitz;
+package com.smpultd.morphie.fitz;
 
+import com.smpultd.morphie.fitz.commands.discordcommands.WhoCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -7,11 +8,10 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-import net.naturva.morphie.fitz.commands.discordcommands.DiscordLinkCommand;
-import net.naturva.morphie.fitz.commands.discordcommands.WhoCommand;
-import net.naturva.morphie.fitz.commands.minecraftcommands.Commands;
-import net.naturva.morphie.fitz.events.MinecraftChat;
-import net.naturva.morphie.fitz.events.playerDataFileEvents;
+import com.smpultd.morphie.fitz.commands.discordcommands.DiscordLinkCommand;
+import com.smpultd.morphie.fitz.commands.minecraftcommands.Commands;
+import com.smpultd.morphie.fitz.events.MinecraftChat;
+import com.smpultd.morphie.fitz.events.PlayerDataFileEvents;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,7 +31,7 @@ public class Fitz extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new MinecraftChat(this), this);
-        getServer().getPluginManager().registerEvents(new playerDataFileEvents(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerDataFileEvents(this), this);
         getCommand("verify").setExecutor(new Commands(this));
         getCommand("discord").setExecutor(new Commands(this));
         startBot();

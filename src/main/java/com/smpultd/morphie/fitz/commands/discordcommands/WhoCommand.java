@@ -1,4 +1,4 @@
-package net.naturva.morphie.fitz.commands.discordcommands;
+package com.smpultd.morphie.fitz.commands.discordcommands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.naturva.morphie.fitz.Fitz;
+import com.smpultd.morphie.fitz.Fitz;
 import org.bukkit.entity.Player;
 
 import java.awt.*;

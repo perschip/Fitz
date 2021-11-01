@@ -1,6 +1,6 @@
 name: Fitz
 version: 1.0-BETA
-main: net.naturva.morphie.fitz.Fitz
+main: com.smpultd.morphie.fitz.Fitz
 author: Morphie
 api-version: 1.13
 depend: [DiscordBotAPI]
