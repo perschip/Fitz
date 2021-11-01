@@ -4,8 +4,6 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.managers.RoleManager;
-import net.dv8tion.jda.api.requests.restaction.RoleAction;
 import net.md_5.bungee.api.ChatColor;
 import net.naturva.morphie.fitz.Fitz;
 import net.naturva.morphie.fitz.events.playerDataFileEvents;
@@ -31,7 +29,7 @@ public class Commands implements CommandExecutor {
 
         }
         Player player = (Player)sender;
-        Guild guild = this.plugin.jda.getGuildById("430081943120642048");
+        Guild guild = this.plugin.jda.getGuildById(this.plugin.getConfig().getString("Guild"));
         if (cmd.getName().equalsIgnoreCase("verify")) {
             if (new playerDataFileMethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aYou have already verified your account! &8(&7" + new playerDataFileMethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "&8)"));

@@ -23,7 +23,7 @@ public class DiscordLinkCommand extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
-        if (e.getAuthor().isBot() || e.getAuthor().isFake() || e.isWebhookMessage())return;
+        if (e.getAuthor().isBot() || e.getAuthor().isBot() || e.isWebhookMessage())return;
         String[] args = e.getMessage().getContentRaw().split(" ");
         if (args[0].equalsIgnoreCase("!link")) {
             if (args.length != 2) {
@@ -46,11 +46,11 @@ public class DiscordLinkCommand extends ListenerAdapter {
 
             EmbedBuilder eBuilder = new EmbedBuilder();
 
-            eBuilder.setAuthor("Naturva » Discord Verification!", null, "https://i.imgur.com/QhPRcUF.png");
-            eBuilder.setColor(Color.CYAN);
+            eBuilder.setAuthor("SMP-Ultd » Discord Verification!", null, "https://i.imgur.com/Uc7xoQ9.png");
+            eBuilder.setColor(Color.decode("#314ecc"));
             eBuilder.setThumbnail(user.getEffectiveAvatarUrl());
             eBuilder.setDescription("Hello, " + user.getAsMention() + "!\n \nTo complete your verification please type the following command in-game!\n`/verify " + randomCode.toString() + "`\n \nIf you run into any problems feel free to contact an avalible staff member!");
-            eBuilder.setFooter("All rights reserved, Naturva 2019 ↠", "https://i.imgur.com/QhPRcUF.png");
+            eBuilder.setFooter("All rights reserved, SMP-Ultd 2021 ↠", "https://i.imgur.com/Uc7xoQ9.png");
 
             MessageEmbed embed = eBuilder.build();
 

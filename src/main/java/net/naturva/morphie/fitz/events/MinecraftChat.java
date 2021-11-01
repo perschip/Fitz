@@ -13,6 +13,7 @@ import net.naturva.morphie.fitz.files.playerDataFileMethods;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -35,7 +36,7 @@ public class MinecraftChat extends ListenerAdapter implements Listener {
         Player p = e.getPlayer();
         String name = p.getName();
         TextChannel channel = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
-        Guild guild = this.plugin.jda.getGuildById("430081943120642048");
+        Guild guild = this.plugin.jda.getGuildById(this.plugin.getConfig().getString("Guild"));
         if (new playerDataFileMethods(this.plugin).getBoolean(p.getUniqueId(), "Linked") == true) {
             if (new playerDataFileMethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated") == false) {
                 if (new playerDataFileMethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank") == "Member") {
@@ -66,7 +67,7 @@ public class MinecraftChat extends ListenerAdapter implements Listener {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
         TextChannel channel = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
-        if (e.getAuthor().isBot() || e.getAuthor().isFake() || e.isWebhookMessage())return;
+        if (e.getAuthor().isBot() || e.getAuthor().isBot() || e.isWebhookMessage())return;
         String message = e.getMessage().getContentRaw();
         if (e.getMessage().getChannel() != channel)return;
         if (e.getMessage().getContentRaw().equalsIgnoreCase("!who"))return;
@@ -78,7 +79,7 @@ public class MinecraftChat extends ListenerAdapter implements Listener {
             String format = new playerDataFileMethods(this.plugin).getDiscordString(discordID, "MinecraftFormat");
             Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bD&8] " + format + " &8» &f" + message));
         } else {
-            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7[&bD&7] &7[&8Knee&7-&8Gear&7] &f" + userName + " &8» &f" + message));
+            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7[&bD&7] &7" + userName + " &8» &f" + message));
         }
     }
 

@@ -51,7 +51,7 @@ public class Fitz extends JavaPlugin implements Listener {
         TextChannel channel = jda.getTextChannelById(this.getConfig().getString("BridgeChannelID"));
         channel.sendMessage(this.getConfig().getString("BotLoaded")).queue();
 
-        jda.getPresence().setActivity(Activity.watching(" on Smpultd.com"));
+        jda.getPresence().setActivity(Activity.playing(" on Smpultd.com"));
     }
 
     public void onDisable() {

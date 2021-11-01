@@ -15,8 +15,11 @@
 # The Discord Bot User Token. (Create a bot at - https://discordapp.com/developers/applications)
 Token: 'MzYwNzgzNzkzNjQ2MjA2OTg2.DxmLNQ.RyPJ_gSOoFyCIuROFHCFas65iFQ'
 
+# The ID of the discord server Fitz is currently using.
+Guild: "786248213845377045"
+
 # The ID of the channel relaying minecraft chat.
-BridgeChannelID: '430497317531942912'
+BridgeChannelID: '795167883050352661'
 
 # The ID of the channel displaying join and leave messages.
 JoinLeaveChannelID: '445625045667020800'
@@ -31,7 +34,7 @@ DiscordToMinecraftFormat: '&8[&bD&8] &eUSER &8&l> &fMESSAGE'
 BotLoaded: ':ballot_box_with_check: **Server Started.**'
 
 # Message sent when the bot is unloaded.
-BotUnloaded: ':redx: **Server Shutdown.**'
+BotUnloaded: ':no_entry: **Server Shutdown.**'
 
 # Role colors for discord bridge
 owner: "AA0000"

@@ -23,7 +23,7 @@ public class WhoCommand extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
-        if (e.getAuthor().isBot() || e.getAuthor().isFake() || e.isWebhookMessage())return;
+        if (e.getAuthor().isBot() || e.getAuthor().isBot() || e.isWebhookMessage())return;
         String[] args = e.getMessage().getContentRaw().split(" ");
         User user = e.getAuthor();
         TextChannel Bridge = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
@@ -42,8 +42,8 @@ public class WhoCommand extends ListenerAdapter {
 
                 EmbedBuilder eBuilder = new EmbedBuilder();
 
-                eBuilder.setAuthor("Naturva » Whos online?", null, "https://i.imgur.com/QhPRcUF.png");
-                eBuilder.setColor(Color.CYAN);
+                eBuilder.setAuthor("SMP-Ultd » Whos online?", null, "https://i.imgur.com/Uc7xoQ9.png");
+                eBuilder.setColor(Color.decode("#314ecc"));
 
                 if (players.size() > 0) {
                     eBuilder.setDescription("\n \nCurrently **" + players.size() + "** players online.\n \n" + pl.toString());
@@ -51,7 +51,7 @@ public class WhoCommand extends ListenerAdapter {
                     eBuilder.setDescription("\n \nCurrently **" + players.size() + "** players online.");
                 }
 
-                eBuilder.setFooter("All rights reserved, Naturva 2019 ↠", "https://i.imgur.com/QhPRcUF.png");
+                eBuilder.setFooter("All rights reserved, SMP-Ultd 2021 ↠", "https://i.imgur.com/Uc7xoQ9.png");
 
                 MessageEmbed embed = eBuilder.build();
 
