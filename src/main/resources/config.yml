@@ -36,6 +36,10 @@ BotLoaded: ':ballot_box_with_check: **Server Started.**'
 # Message sent when the bot is unloaded.
 BotUnloaded: ':no_entry: **Server Shutdown.**'
 
+# Roles: Verified / Fitz: This needs to be the exact role name.
+Verified: "► Verified"
+Fitz: "Fitz"
+
 # Role colors for discord bridge
 owner: "AA0000"
 admin: "FF5555"

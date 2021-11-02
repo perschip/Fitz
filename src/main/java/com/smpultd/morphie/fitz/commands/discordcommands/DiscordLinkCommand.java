@@ -35,7 +35,7 @@ public class DiscordLinkCommand extends ListenerAdapter {
                 e.getChannel().sendMessage(":no_entry: I cannot find that user on the server currently! *(Make sure you're connected to the server!)*").queue();
                 return;
             }
-            if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
+            if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked")) {
                 e.getChannel().sendMessage(":no_entry: You have already verified your account! **(**" + new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "**)**").queue();
                 return;
             }

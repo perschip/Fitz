@@ -1,13 +1,11 @@
 package com.smpultd.morphie.fitz.commands.minecraftcommands;
 
 import com.smpultd.morphie.fitz.Fitz;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.md_5.bungee.api.ChatColor;
 import com.smpultd.morphie.fitz.events.PlayerDataFileEvents;
 import com.smpultd.morphie.fitz.files.Playerdatafilemethods;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -49,7 +47,8 @@ public class Commands implements CommandExecutor {
                 return true;
             }
             String discordID = this.plugin.uuidDiscordId.get(player.getUniqueId());
-            Member member = guild.getMemberById(discordID);
+            User user = this.plugin.jda.retrieveUserById(discordID).complete();
+            Member member = guild.retrieveMember(user).complete();
             if (member == null) {
                 this.plugin.uuidDiscordId.remove(player.getUniqueId());
                 this.plugin.uuidUserCode.remove(player.getUniqueId());
@@ -67,8 +66,8 @@ public class Commands implements CommandExecutor {
             new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "DiscordRole", member.getRoles().get(0).toString());
             this.plugin.uuidDiscordId.remove(player.getUniqueId());
             this.plugin.uuidUserCode.remove(player.getUniqueId());
-            Role role = guild.getRolesByName("Verified", false).get(0);
-            Role role2 = guild.getRolesByName("Fitz", false).get(0);
+            Role role = guild.getRolesByName(this.plugin.getConfig().getString("Verified"), false).get(0);
+            Role role2 = guild.getRolesByName(this.plugin.getConfig().getString("Fitz"), false).get(0);
             guild.addRoleToMember(member, role).queue();
             TextChannel channel = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
             member.getUser().openPrivateChannel().complete().sendMessage(":white_check_mark: You successfully verified your account! **(**" + player.getName() + "**)**").queue();
@@ -86,7 +85,7 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8---------- [&3&lDiscord&8] ----------"));
                 return true;
             } else if (args[0].equals("resync")) {
-                if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
+                if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked")) {
                     String discordID = new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "DiscordId");
                     Member member = guild.getMemberById(discordID);
                     if (member == null) {

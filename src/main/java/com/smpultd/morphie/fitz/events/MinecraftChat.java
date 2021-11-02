@@ -36,8 +36,8 @@ public class MinecraftChat extends ListenerAdapter implements Listener {
         String name = p.getName();
         TextChannel channel = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
         Guild guild = this.plugin.jda.getGuildById(this.plugin.getConfig().getString("Guild"));
-        if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "Linked") == true) {
-            if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated") == false) {
+        if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "Linked")) {
+            if (!new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated")) {
                 if (new Playerdatafilemethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank") == "Member") {
                     channel.sendMessage("**" + p.getName() + "**" + " **»** " + msg).queue();
                 } else {
