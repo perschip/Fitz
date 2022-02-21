@@ -1,12 +1,13 @@
-package com.smpultd.morphie.fitz.commands.discordcommands;
+package com.salvos.morphie.fitz.commands.discord;
 
+import com.salvos.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.util.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import com.smpultd.morphie.fitz.Fitz;
 import org.bukkit.entity.Player;
 
 import java.awt.*;
@@ -22,11 +23,11 @@ public class WhoCommand extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
+    public void onMessageReceived(MessageReceivedEvent e) {
         if (e.getAuthor().isBot() || e.getAuthor().isBot() || e.isWebhookMessage())return;
         String[] args = e.getMessage().getContentRaw().split(" ");
         User user = e.getAuthor();
-        TextChannel Bridge = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
+        TextChannel Bridge = this.plugin.getBot().getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
         if (args.length > 1) {
             return;
         } if (e.getChannel() != Bridge) {
@@ -40,22 +41,14 @@ public class WhoCommand extends ListenerAdapter {
                     pl.add(p.getName());
                 }
 
-                EmbedBuilder eBuilder = new EmbedBuilder();
-
-                eBuilder.setAuthor("SMP-Ultd » Whos online?", null, "https://i.imgur.com/Uc7xoQ9.png");
-                eBuilder.setColor(Color.decode("#314ecc"));
-
+                EmbedBuilder eBuilder = new EmbedUtils(plugin).embedBuilder(user, "Whos Online?");
                 if (players.size() > 0) {
                     eBuilder.setDescription("\n \nCurrently **" + players.size() + "** players online.\n \n" + pl.toString());
                 } else {
                     eBuilder.setDescription("\n \nCurrently **" + players.size() + "** players online.");
                 }
-
-                eBuilder.setFooter("All rights reserved, SMP-Ultd 2021 ↠", "https://i.imgur.com/Uc7xoQ9.png");
-
                 MessageEmbed embed = eBuilder.build();
-
-                e.getChannel().sendMessage(embed).queue();
+                e.getChannel().sendMessageEmbeds(embed).queue();
             }
         }
     }

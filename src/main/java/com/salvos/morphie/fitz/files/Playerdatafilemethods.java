@@ -1,6 +1,6 @@
-package com.smpultd.morphie.fitz.files;
+package com.salvos.morphie.fitz.files;
 
-import com.smpultd.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.Fitz;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

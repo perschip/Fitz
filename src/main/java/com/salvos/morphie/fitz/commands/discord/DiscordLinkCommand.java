@@ -1,12 +1,12 @@
-package com.smpultd.morphie.fitz.commands.discordcommands;
+package com.salvos.morphie.fitz.commands.discord;
 
-import com.smpultd.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.Fitz;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import com.smpultd.morphie.fitz.files.Playerdatafilemethods;
+import com.salvos.morphie.fitz.files.Playerdatafilemethods;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -22,7 +22,7 @@ public class DiscordLinkCommand extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
+    public void onMessageReceived(MessageReceivedEvent e) {
         if (e.getAuthor().isBot() || e.getAuthor().isBot() || e.isWebhookMessage())return;
         String[] args = e.getMessage().getContentRaw().split(" ");
         if (args[0].equalsIgnoreCase("!link")) {
@@ -54,7 +54,7 @@ public class DiscordLinkCommand extends ListenerAdapter {
 
             MessageEmbed embed = eBuilder.build();
 
-            e.getAuthor().openPrivateChannel().complete().sendMessage(embed).queue();
+            e.getAuthor().openPrivateChannel().complete().sendMessageEmbeds(embed).complete();
             e.getChannel().sendMessage(":white_check_mark: Instructions sent in PMs! :)").queue();
         }
     }

@@ -1,6 +1,12 @@
-package com.smpultd.morphie.fitz;
+package com.salvos.morphie.fitz;
 
-import com.smpultd.morphie.fitz.commands.discordcommands.WhoCommand;
+import com.salvos.morphie.fitz.commands.discord.DiscordLinkCommand;
+import com.salvos.morphie.fitz.commands.discord.WhoCommand;
+import com.salvos.morphie.fitz.events.discord.DiscordChatEvent;
+import com.salvos.morphie.fitz.events.discord.DiscordJoinEvent;
+import com.salvos.morphie.fitz.events.discord.DiscordLeaveEvent;
+import com.salvos.morphie.fitz.events.minecraft.MinecraftChatEvent;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -8,11 +14,10 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-import com.smpultd.morphie.fitz.commands.discordcommands.DiscordLinkCommand;
-import com.smpultd.morphie.fitz.commands.minecraftcommands.Commands;
-import com.smpultd.morphie.fitz.events.MinecraftChat;
-import com.smpultd.morphie.fitz.events.PlayerDataFileEvents;
+import com.salvos.morphie.fitz.commands.minecraft.Commands;
+import com.salvos.morphie.fitz.events.PlayerDataFileEvents;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,36 +27,38 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Fitz extends JavaPlugin implements Listener {
-	public JDA jda;
+
+    private JDA bot;
+
     public Permission perms = null;
     public Chat chat = null;
     public HashMap<UUID,String>uuidUserCode;
     public HashMap<UUID,String>uuidDiscordId;
+    private MinecraftChatEvent mc;
+    private PlayerDataFileEvents pe;
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new MinecraftChat(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerDataFileEvents(this), this);
         getCommand("verify").setExecutor(new Commands(this));
         getCommand("discord").setExecutor(new Commands(this));
-        startBot();
+        this.mc = new MinecraftChatEvent(this);
+        this.pe = new PlayerDataFileEvents(this);
+        getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(this.mc, this);
+        getServer().getPluginManager().registerEvents(this.pe, this);
         uuidUserCode = new HashMap<>();
         uuidDiscordId = new HashMap<>();
         createConfig();
         setupPermissions();
         setupChat();
+
+        //Start Fitz
+        startBot();
+
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[----------[&3Fitz&8]----------]"));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&bBot&8: &aOnline"));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&bPlugin Status&8: &aEnabled"));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[----------[&3Fitz&8]----------]"));
-
-        jda.addEventListener(new MinecraftChat(this));
-        jda.addEventListener(new WhoCommand(this));
-        jda.addEventListener(new DiscordLinkCommand(this));
-        TextChannel channel = jda.getTextChannelById(this.getConfig().getString("BridgeChannelID"));
-        channel.sendMessage(this.getConfig().getString("BotLoaded")).queue();
-
-        jda.getPresence().setActivity(Activity.playing(" on Smpultd.com"));
     }
 
     public void onDisable() {
@@ -59,16 +66,26 @@ public class Fitz extends JavaPlugin implements Listener {
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&bBot&8: &cOffline"));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&bPlugin Status&8: &cDisabled"));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[----------[&3Fitz&8]----------]"));
-        TextChannel channel = jda.getTextChannelById(this.getConfig().getString("BridgeChannelID"));
+        TextChannel channel = bot.getTextChannelById(this.getConfig().getString("BridgeChannelID"));
         channel.sendMessage(this.getConfig().getString("BotUnloaded")).queue();
     }
 
     private void startBot() {
         try {
-            jda = JDABuilder.createDefault(this.getConfig().getString("Token")) // The token of the account that is logging in.
+            this.bot = JDABuilder.createDefault(getConfig().getString("Token"))
                     .build();
-            jda.awaitReady(); // Blocking guarantees that JDA will be completely loaded.
+            bot.awaitReady(); // Blocking guarantees that JDA will be completely loaded.
             System.out.println("Finished Building JDA!");
+            bot.addEventListener(new DiscordChatEvent(this));
+            bot.addEventListener(new DiscordJoinEvent(this));
+            bot.addEventListener(new DiscordLeaveEvent(this));
+            bot.addEventListener(new WhoCommand(this));
+            bot.addEventListener(new DiscordLinkCommand(this));
+
+            bot.getPresence().setActivity(Activity.playing(getConfig().getString("StatusMessage")));
+
+            TextChannel channel = bot.getTextChannelById(getConfig().getString("BridgeChannelID"));
+            channel.sendMessage(getConfig().getString("BotLoaded")).queue();
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -107,5 +124,10 @@ public class Fitz extends JavaPlugin implements Listener {
         }
 
         return (chat != null);
+    }
+
+    @Getter
+    public JDA getBot() {
+        return bot;
     }
 }

@@ -1,11 +1,10 @@
-package com.smpultd.morphie.fitz.commands.minecraftcommands;
+package com.salvos.morphie.fitz.commands.minecraft;
 
-import com.smpultd.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.Fitz;
 import net.dv8tion.jda.api.entities.*;
 import net.md_5.bungee.api.ChatColor;
-import com.smpultd.morphie.fitz.events.PlayerDataFileEvents;
-import com.smpultd.morphie.fitz.files.Playerdatafilemethods;
-import org.bukkit.Bukkit;
+import com.salvos.morphie.fitz.events.PlayerDataFileEvents;
+import com.salvos.morphie.fitz.files.Playerdatafilemethods;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +26,7 @@ public class Commands implements CommandExecutor {
 
         }
         Player player = (Player)sender;
-        Guild guild = this.plugin.jda.getGuildById(this.plugin.getConfig().getString("Guild"));
+        Guild guild = this.plugin.getBot().getGuildById(this.plugin.getConfig().getString("Guild"));
         if (cmd.getName().equalsIgnoreCase("verify")) {
             if (new Playerdatafilemethods(this.plugin).getBoolean(player.getUniqueId(), "Linked") == true) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aYou have already verified your account! &8(&7" + new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "&8)"));
@@ -47,7 +46,7 @@ public class Commands implements CommandExecutor {
                 return true;
             }
             String discordID = this.plugin.uuidDiscordId.get(player.getUniqueId());
-            User user = this.plugin.jda.retrieveUserById(discordID).complete();
+            User user = this.plugin.getBot().retrieveUserById(discordID).complete();
             Member member = guild.retrieveMember(user).complete();
             if (member == null) {
                 this.plugin.uuidDiscordId.remove(player.getUniqueId());
@@ -69,7 +68,7 @@ public class Commands implements CommandExecutor {
             Role role = guild.getRolesByName(this.plugin.getConfig().getString("Verified"), false).get(0);
             Role role2 = guild.getRolesByName(this.plugin.getConfig().getString("Fitz"), false).get(0);
             guild.addRoleToMember(member, role).queue();
-            TextChannel channel = this.plugin.jda.getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
+            TextChannel channel = this.plugin.getBot().getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
             member.getUser().openPrivateChannel().complete().sendMessage(":white_check_mark: You successfully verified your account! **(**" + player.getName() + "**)**").queue();
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aAccount successfully verified! &8(&7" + member.getUser().getName() + "#" + member.getUser().getDiscriminator() + "&8)"));
             channel.sendMessage(role2.getAsMention() + " **»** " + member.getAsMention() + " just linked their discord and minecraft accounts!").queue();

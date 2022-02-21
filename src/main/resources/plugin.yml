@@ -1,9 +1,8 @@
 name: Fitz
-version: 1.0-BETA
-main: com.smpultd.morphie.fitz.Fitz
+version: 1.3-ALPHA
+main: com.salvos.morphie.fitz.Fitz
 author: Morphie
 api-version: 1.13
-depend: [DiscordBotAPI]
 commands:
   discord:
     description: Main command for the in-game.

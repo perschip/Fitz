@@ -7,34 +7,71 @@
 #      \/                   \/
 #============================================================================================================================|
 #
-# Plugin Version: 1.0.1
 # Author's Discord: Morphie#6969
 #
 #============================================================================================================================|
 
+# Bot Settings:
 # The Discord Bot User Token. (Create a bot at - https://discordapp.com/developers/applications)
-Token: 'MzYwNzgzNzkzNjQ2MjA2OTg2.DxmLNQ.RyPJ_gSOoFyCIuROFHCFas65iFQ'
+Token: "MzYwNzgzNzkzNjQ2MjA2OTg2.WcUUFw.mu3ME_Fr26bLDgfh0Kbe6CfQgI4"
+# What the bots status is within the discord member list. Types: PLAYING, WATCHING, STREAMING
+StatusMessage: "on Salvos.GG"
 
+#============================================================================================================================|
+
+# Discord Guild + Channel ID's
 # The ID of the discord server Fitz is currently using.
 Guild: "786248213845377045"
-
 # The ID of the channel relaying minecraft chat.
 BridgeChannelID: '795167883050352661'
-
 # The ID of the channel displaying join and leave messages.
 JoinLeaveChannelID: '445625045667020800'
+# The ID of the information channel. (Server Information)
+InformationChannelID: '802484042233675777'
+# The ID of the rules channel.
+RulesChannelID: '859972898599862343'
+# The ID of the bot commands channel.
+BotCommandsChannelID: '786248214407938052'
 
-# How the messages will appear in the discord relay channel.
-MinecraftToDiscordFormat: '**[**RANK**]** *PLAYER* **>** MESSAGE'
+#============================================================================================================================|
 
+#Message Formats
+# How the messages will appear in the discord bridge channel.
+MinecraftToDiscordFormat: '**[**%RANK%**]** *%PLAYER%* **»** '
 # How the messages will appear in the minecraft chat when sent from the discord channel.
-DiscordToMinecraftFormat: '&8[&bD&8] &eUSER &8&l> &fMESSAGE'
-
+DiscordToMinecraftFormat: '&8[&bD&8] &e%USER% &8&l» &fMESSAGE'
 # Message sent when the bot is loaded.
 BotLoaded: ':ballot_box_with_check: **Server Started.**'
-
 # Message sent when the bot is unloaded.
 BotUnloaded: ':no_entry: **Server Shutdown.**'
+# Message sent in discord bridge when a player joins the server for the first time.
+PlayerFirstJoin: ':piñata: ***%PLAYER%*** *has joined the server for the first time!*'
+# Message sent in discord bridge when a player dies in game.
+PlayerDeathMessage: ':coffin: ***%PLAYER%*** *DEATH_MESSAGE*'
+
+#============================================================================================================================|
+
+# Default Embed Settings: (Things for the fancy messages fitz can make!)
+# Imgur Link of logo
+Image: 'https://i.imgur.com/tHHcBOY.png'
+# Title or default header of each embeded message.
+Header: '***Salvos GG*** » %TITLE%'
+# Footer of each embeded message.
+Footer: 'All rights reserved, Salvos GG 2022 ↠'
+# Outline color of the embeded messages. (Hex Code)
+Color: '#5555FF'
+
+#============================================================================================================================|
+
+# Roles Settings:
+# Role given to users when they join the discord server
+JoinRole: "Member"
+# Role given to users that successfully link their MC and Discord accounts
+Verified: "Verified"
+# Admin Role given to fitz for his naming
+Fitz: "Fitz"
+
+#============================================================================================================================|
 
 # Role colors for discord bridge
 owner: "AA0000"

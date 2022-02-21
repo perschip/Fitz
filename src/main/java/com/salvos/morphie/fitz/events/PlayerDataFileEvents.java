@@ -1,6 +1,6 @@
-package com.smpultd.morphie.fitz.events;
+package com.salvos.morphie.fitz.events;
 
-import com.smpultd.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.Fitz;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,7 +26,7 @@ public class PlayerDataFileEvents implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        UUID uuid = player.getUniqueId();
+        final UUID uuid = player.getUniqueId();
 
         new BukkitRunnable() {
             public void run() {
@@ -66,8 +66,8 @@ public class PlayerDataFileEvents implements Listener {
         return data;
     }
 
-    public void addData(Player player, String discordID, String discordName, String format) {
-        UUID uuid = player.getUniqueId();
+    public void addData(final Player player, final String discordID, final String discordName, final String format) {
+        final UUID uuid = player.getUniqueId();
 
         new BukkitRunnable() {
             public void run() {
