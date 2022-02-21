@@ -28,6 +28,6 @@ public class DiscordJoinEvent extends ListenerAdapter {
         eBuilder.addField("-", "Beep Boop. Looking for my commands? To get a list of all my commands you can type `!help` in the " + botCommands.getAsMention() + " channel!", false);
         eBuilder.addField("-", "Lastly, you can find our servers rules within the" + rules.getAsMention() + "channel. Happy Crafting!", false);
         MessageEmbed embed = eBuilder.build();
-        welcome.sendMessage((CharSequence) embed).queue();
+        welcome.sendMessageEmbeds(embed).queue();
     }
 }

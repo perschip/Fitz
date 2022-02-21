@@ -26,6 +26,6 @@ public class DiscordLeaveEvent extends ListenerAdapter {
         eBuilder.addField("-", "Farewell, " + user.getName() + "!", false);
         MessageEmbed embed = eBuilder.build();
 
-        leave.sendMessage((CharSequence) embed).queue();
+        leave.sendMessageEmbeds(embed).queue();
     }
 }

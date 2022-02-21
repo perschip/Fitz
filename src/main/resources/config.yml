@@ -25,7 +25,7 @@ Guild: "786248213845377045"
 # The ID of the channel relaying minecraft chat.
 BridgeChannelID: '795167883050352661'
 # The ID of the channel displaying join and leave messages.
-JoinLeaveChannelID: '445625045667020800'
+JoinLeaveChannelID: '786248214012887096'
 # The ID of the information channel. (Server Information)
 InformationChannelID: '802484042233675777'
 # The ID of the rules channel.
@@ -65,21 +65,21 @@ Color: '#5555FF'
 
 # Roles Settings:
 # Role given to users when they join the discord server
-JoinRole: "Member"
+JoinRole: "► Member"
 # Role given to users that successfully link their MC and Discord accounts
-Verified: "Verified"
+Verified: "► Verified"
 # Admin Role given to fitz for his naming
 Fitz: "Fitz"
 
 #============================================================================================================================|
 
 # Role colors for discord bridge
-owner: "AA0000"
-admin: "FF5555"
-developer: "55FF55"
-build-admin: "FFAA00"
-operator: "00AAAA"
-moderator: "55FFFF"
-t-mod: "55FFFF"
-builder: "FFFF55"
-veteran: "FF55FF"
+Owner: "AA0000"
+Admin: "5555FF"
+Developer: "55FF55"
+Build-Admin: "FFAA00"
+Operator: "00AAAA"
+Moderator: "55FFFF"
+TrialModerator: "55FFFF"
+Builder: "FFFF55"
+Veteran: "FF55FF"

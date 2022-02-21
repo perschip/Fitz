@@ -1,6 +1,7 @@
 package com.salvos.morphie.fitz.commands.discord;
 
 import com.salvos.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.util.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
@@ -44,17 +45,10 @@ public class DiscordLinkCommand extends ListenerAdapter {
             this.plugin.uuidUserCode.put(player.getUniqueId(), randomCode);
             this.plugin.uuidDiscordId.put(player.getUniqueId(), e.getAuthor().getId());
 
-            EmbedBuilder eBuilder = new EmbedBuilder();
-
-            eBuilder.setAuthor("SMP-Ultd » Discord Verification!", null, "https://i.imgur.com/Uc7xoQ9.png");
-            eBuilder.setColor(Color.decode("#314ecc"));
-            eBuilder.setThumbnail(user.getEffectiveAvatarUrl());
+            EmbedBuilder eBuilder = new EmbedUtils(plugin).embedBuilder(user, "Discord Verification!");
             eBuilder.setDescription("Hello, " + user.getAsMention() + "!\n \nTo complete your verification please type the following command in-game!\n`/verify " + randomCode.toString() + "`\n \nIf you run into any problems feel free to contact an avalible staff member!");
-            eBuilder.setFooter("All rights reserved, SMP-Ultd 2021 ↠", "https://i.imgur.com/Uc7xoQ9.png");
-
             MessageEmbed embed = eBuilder.build();
-
-            e.getAuthor().openPrivateChannel().complete().sendMessageEmbeds(embed).complete();
+            e.getAuthor().openPrivateChannel().complete().sendMessageEmbeds(embed).queue();
             e.getChannel().sendMessage(":white_check_mark: Instructions sent in PMs! :)").queue();
         }
     }
