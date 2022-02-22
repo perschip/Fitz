@@ -3,6 +3,7 @@ version: 1.3-ALPHA
 main: com.salvos.morphie.fitz.Fitz
 author: Morphie
 api-version: 1.13
+depend: [Vault]
 commands:
   discord:
     description: Main command for the in-game.

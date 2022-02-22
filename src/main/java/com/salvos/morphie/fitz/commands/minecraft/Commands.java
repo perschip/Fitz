@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.md_5.bungee.api.ChatColor;
 import com.salvos.morphie.fitz.events.PlayerDataFileEvents;
 import com.salvos.morphie.fitz.files.Playerdatafilemethods;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,9 +55,7 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aCannot find your discord account! Are you on our server? (/discord)"));
                 return true;
             }
-            String prefix = this.plugin.chat.getPlayerPrefix(player);
-            String format = ChatColor.translateAlternateColorCodes('&', prefix + player.getDisplayName());
-            new PlayerDataFileEvents(this.plugin).addData(player, discordID, member.getUser().getName(), format);
+            new PlayerDataFileEvents(this.plugin).addData(player, discordID, member.getUser().getName());
             new Playerdatafilemethods(this.plugin).setBoolean(player, player.getUniqueId(), "Linked", true);
             new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftName", player.getName());
             new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));
@@ -65,8 +64,8 @@ public class Commands implements CommandExecutor {
             new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "DiscordRole", member.getRoles().get(0).toString());
             this.plugin.uuidDiscordId.remove(player.getUniqueId());
             this.plugin.uuidUserCode.remove(player.getUniqueId());
-            Role role = guild.getRolesByName(this.plugin.getConfig().getString("Verified"), false).get(0);
-            Role role2 = guild.getRolesByName(this.plugin.getConfig().getString("Fitz"), false).get(0);
+            Role role = guild.getRoleById(plugin.getConfig().getString("VerifiedID"));
+            Role role2 = guild.getRoleById(plugin.getConfig().getString("FitzID"));
             guild.addRoleToMember(member, role).queue();
             TextChannel channel = this.plugin.getBot().getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
             member.getUser().openPrivateChannel().complete().sendMessage(":white_check_mark: You successfully verified your account! **(**" + player.getName() + "**)**").queue();

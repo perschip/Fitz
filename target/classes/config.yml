@@ -67,9 +67,9 @@ Color: '#5555FF'
 # Role given to users when they join the discord server
 JoinRole: "► Member"
 # Role given to users that successfully link their MC and Discord accounts
-Verified: "► Verified"
+VerifiedID: "945395204360376340"
 # Admin Role given to fitz for his naming
-Fitz: "Fitz"
+FitzID: "904803521755500554"
 
 #============================================================================================================================|
 

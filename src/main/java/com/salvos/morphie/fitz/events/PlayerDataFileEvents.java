@@ -66,7 +66,7 @@ public class PlayerDataFileEvents implements Listener {
         return data;
     }
 
-    public void addData(final Player player, final String discordID, final String discordName, final String format) {
+    public void addData(final Player player, final String discordID, final String discordName) {
         final UUID uuid = player.getUniqueId();
 
         new BukkitRunnable() {
@@ -76,7 +76,6 @@ public class PlayerDataFileEvents implements Listener {
                 if (!pd2.contains("MinecraftName")) {
                     pd2.set("MinecraftName", String.valueOf(player.getName()));
                     pd2.set("MinecraftUUID", String.valueOf(uuid));
-                    pd2.set("MinecraftFormat", String.valueOf(format));
                     pd2.set("DiscordName", String.valueOf(discordName));
                     try {
                         pd2.save(file);
