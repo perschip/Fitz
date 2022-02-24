@@ -6,6 +6,8 @@ import com.salvos.morphie.fitz.events.discord.DiscordChatEvent;
 import com.salvos.morphie.fitz.events.discord.DiscordJoinEvent;
 import com.salvos.morphie.fitz.events.discord.DiscordLeaveEvent;
 import com.salvos.morphie.fitz.events.minecraft.MinecraftChatEvent;
+import com.salvos.morphie.fitz.events.minecraft.MinecraftJoinEvent;
+import com.salvos.morphie.fitz.events.minecraft.MinecraftLeaveEvent;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.JDA;
@@ -36,6 +38,8 @@ public class Fitz extends JavaPlugin implements Listener {
     public HashMap<UUID,String>uuidUserCode;
     public HashMap<UUID,String>uuidDiscordId;
     private MinecraftChatEvent mc;
+    private MinecraftJoinEvent mj;
+    private MinecraftLeaveEvent ml;
     private PlayerDataFileEvents pe;
 
     @Override
@@ -43,10 +47,14 @@ public class Fitz extends JavaPlugin implements Listener {
         getCommand("verify").setExecutor(new Commands(this));
         getCommand("discord").setExecutor(new Commands(this));
         this.mc = new MinecraftChatEvent(this);
+        this.mj = new MinecraftJoinEvent(this);
+        this.ml = new MinecraftLeaveEvent(this);
         this.pe = new PlayerDataFileEvents(this);
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(this.mc, this);
         getServer().getPluginManager().registerEvents(this.pe, this);
+        getServer().getPluginManager().registerEvents(this.mj, this);
+        getServer().getPluginManager().registerEvents(this.ml, this);
         uuidUserCode = new HashMap<>();
         uuidDiscordId = new HashMap<>();
         createConfig();

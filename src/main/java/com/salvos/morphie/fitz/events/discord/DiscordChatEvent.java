@@ -31,10 +31,10 @@ public class DiscordChatEvent extends ListenerAdapter {
         User user = e.getAuthor();
         String userName = user.getName();
         String discordID = user.getId();
-        UUID getUUID = UUID.fromString(new Playerdatafilemethods(plugin).getDiscordString(discordID, "MinecraftUUID"));
-        Player player = Bukkit.getPlayer(getUUID);
 
         if (new Playerdatafilemethods(this.plugin).checkDiscordFile(discordID).exists()) {
+            UUID getUUID = UUID.fromString(new Playerdatafilemethods(plugin).getDiscordString(discordID, "MinecraftUUID"));
+            Player player = Bukkit.getPlayer(getUUID);
             String format = plugin.getConfig().getString("DiscordToMinecraftFormat").replace("MESSAGE", message);
             format = PlaceholderAPI.setPlaceholders(player, format);
             Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', format));

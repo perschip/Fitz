@@ -22,8 +22,7 @@ public class MinecraftLeaveEvent implements Listener {
         String name = p.getName().toString();
         TextChannel channel = this.plugin.getBot().getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
         if (!p.hasPermission("Fitz.silentLeave")) {
-            this.plugin.chat.getGroupPrefix("world", "group");
-            channel.sendMessage(":arrow_backward: ** " + name + " has disconnected.**").queue();
+            channel.sendMessage(plugin.getConfig().getString("PlayerLeave").replace("%PLAYER%", name)).queue();
         }
     }
 }
