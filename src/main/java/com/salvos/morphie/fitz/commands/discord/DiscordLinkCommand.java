@@ -11,7 +11,6 @@ import com.salvos.morphie.fitz.files.Playerdatafilemethods;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
 import java.util.Random;
 
 public class DiscordLinkCommand extends ListenerAdapter {
@@ -40,7 +39,7 @@ public class DiscordLinkCommand extends ListenerAdapter {
                 e.getChannel().sendMessage(":no_entry: You have already verified your account! **(**" + new Playerdatafilemethods(this.plugin).getString(player.getUniqueId(), "DiscordName") + "**)**").queue();
                 return;
             }
-            String randomCode = new Random().nextInt(8000)+2000+"NA";
+            String randomCode = new Random().nextInt(8000)+2000+"GG";
             User user = e.getAuthor();
             this.plugin.uuidUserCode.put(player.getUniqueId(), randomCode);
             this.plugin.uuidDiscordId.put(player.getUniqueId(), e.getAuthor().getId());

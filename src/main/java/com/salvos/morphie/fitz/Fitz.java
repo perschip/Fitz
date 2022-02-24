@@ -7,6 +7,7 @@ import com.salvos.morphie.fitz.events.discord.DiscordJoinEvent;
 import com.salvos.morphie.fitz.events.discord.DiscordLeaveEvent;
 import com.salvos.morphie.fitz.events.minecraft.MinecraftChatEvent;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -17,7 +18,6 @@ import net.milkbowl.vault.permission.Permission;
 import com.salvos.morphie.fitz.commands.minecraft.Commands;
 import com.salvos.morphie.fitz.events.PlayerDataFileEvents;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +29,7 @@ import java.util.UUID;
 public class Fitz extends JavaPlugin implements Listener {
 
     private JDA bot;
+    private PlaceholderAPI p;
 
     public Permission perms = null;
     public Chat chat = null;
@@ -129,5 +130,10 @@ public class Fitz extends JavaPlugin implements Listener {
     @Getter
     public JDA getBot() {
         return bot;
+    }
+
+    @Getter
+    public PlaceholderAPI getPAPI() {
+        return p;
     }
 }

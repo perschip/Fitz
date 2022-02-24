@@ -15,7 +15,7 @@ public class DiscordJoinEvent extends ListenerAdapter {
         this.plugin = plugin;
     }
 
-    @Override // USE THIS WHEN YOU WANT TO OVERRIDE A METHOD
+    @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent e) {
         User user = e.getUser();
         TextChannel welcome = plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getJoinLeaveId());

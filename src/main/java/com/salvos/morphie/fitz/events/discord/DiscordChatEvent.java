@@ -2,13 +2,13 @@ package com.salvos.morphie.fitz.events.discord;
 
 import com.salvos.morphie.fitz.Fitz;
 import com.salvos.morphie.fitz.files.Playerdatafilemethods;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -35,9 +35,9 @@ public class DiscordChatEvent extends ListenerAdapter {
         Player player = Bukkit.getPlayer(getUUID);
 
         if (new Playerdatafilemethods(this.plugin).checkDiscordFile(discordID).exists()) {
-            World world = Bukkit.getWorld("world");
-            String format = plugin.chat.getGroupPrefix(world, new Playerdatafilemethods(plugin).getString(player.getUniqueId(), "MinecraftRank"));
-            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bD&8] " + format + " &8» &f" + message));
+            String format = plugin.getConfig().getString("DiscordToMinecraftFormat").replace("MESSAGE", message);
+            format = PlaceholderAPI.setPlaceholders(player, format);
+            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', format));
         } else {
             Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7[&bD&7] &7" + userName + " &8» &f" + message));
         }

@@ -39,7 +39,7 @@ BotCommandsChannelID: '786248214407938052'
 # How the messages will appear in the discord bridge channel.
 MinecraftToDiscordFormat: '**[**%RANK%**]** *%PLAYER%* **»** '
 # How the messages will appear in the minecraft chat when sent from the discord channel.
-DiscordToMinecraftFormat: '&8[&bD&8] &e%USER% &8&l» &fMESSAGE'
+DiscordToMinecraftFormat: '&8[&bD&8] &e%luckperms_prefix% %essentials_nickname% &8&l» &fMESSAGE'
 # Message sent when the bot is loaded.
 BotLoaded: ':ballot_box_with_check: **Server Started.**'
 # Message sent when the bot is unloaded.
