@@ -3,6 +3,7 @@ package com.salvos.morphie.fitz.events.minecraft;
 import com.salvos.morphie.fitz.Fitz;
 import com.salvos.morphie.fitz.files.Playerdatafilemethods;
 import com.salvos.morphie.fitz.util.DiscordMethods;
+import com.vdurmont.emoji.EmojiParser;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -31,6 +32,14 @@ public class MinecraftChatEvent implements Listener {
         String chatFormat = this.plugin.getConfig().getString("MinecraftToDiscordFormat").replace("%RANK%", plugin.chat.getPrimaryGroup(p)).replace( "%PLAYER%", name);
         TextChannel channel = this.plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getBridgeId());
         Guild guild = this.plugin.getBot().getGuildById(new DiscordMethods(plugin).getGuild());
+
+        // Replace @here or @everyone
+        msg = msg.replace("@everyone", "everyone");
+        msg = msg.replace("@here", "here");
+
+        // Check for any @'s in the message
+        msg = new DiscordMethods(plugin).parseMentions(msg);
+
         if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "Linked")) {
             if (!new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated")) {
                 if (new Playerdatafilemethods(this.plugin).getString(p.getUniqueId(), "MinecraftRank") == "Member") {

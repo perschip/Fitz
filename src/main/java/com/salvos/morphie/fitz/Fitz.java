@@ -8,6 +8,7 @@ import com.salvos.morphie.fitz.events.discord.DiscordLeaveEvent;
 import com.salvos.morphie.fitz.events.minecraft.MinecraftChatEvent;
 import com.salvos.morphie.fitz.events.minecraft.MinecraftJoinEvent;
 import com.salvos.morphie.fitz.events.minecraft.MinecraftLeaveEvent;
+import com.salvos.morphie.fitz.util.DiscordMethods;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.JDA;
@@ -77,6 +78,7 @@ public class Fitz extends JavaPlugin implements Listener {
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[----------[&3Fitz&8]----------]"));
         TextChannel channel = bot.getTextChannelById(this.getConfig().getString("BridgeChannelID"));
         channel.sendMessage(this.getConfig().getString("BotUnloaded")).queue();
+        new DiscordMethods(this).setTopic("OFFLINE");
     }
 
     private void startBot() {
@@ -93,6 +95,7 @@ public class Fitz extends JavaPlugin implements Listener {
 
             bot.getPresence().setActivity(Activity.playing(getConfig().getString("StatusMessage")));
 
+            new DiscordMethods(this).setTopic("UPDATE");
             TextChannel channel = bot.getTextChannelById(getConfig().getString("BridgeChannelID"));
             channel.sendMessage(getConfig().getString("BotLoaded")).queue();
         } catch (LoginException | InterruptedException e) {

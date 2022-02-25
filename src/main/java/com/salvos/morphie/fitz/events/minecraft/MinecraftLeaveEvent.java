@@ -1,6 +1,7 @@
 package com.salvos.morphie.fitz.events.minecraft;
 
 import com.salvos.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.util.DiscordMethods;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,10 +20,11 @@ public class MinecraftLeaveEvent implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        String name = p.getName().toString();
+        String name = p.getName();
         TextChannel channel = this.plugin.getBot().getTextChannelById(this.plugin.getConfig().getString("BridgeChannelID"));
         if (!p.hasPermission("Fitz.silentLeave")) {
             channel.sendMessage(plugin.getConfig().getString("PlayerLeave").replace("%PLAYER%", name)).queue();
         }
+        new DiscordMethods(plugin).setTopic("UPDATE");
     }
 }
