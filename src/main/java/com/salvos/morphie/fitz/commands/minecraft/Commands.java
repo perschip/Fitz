@@ -54,7 +54,7 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&3&lDiscord&8] &aCannot find your discord account! Are you on our server? (/discord)"));
                 return true;
             }
-            new PlayerDataFileEvents(this.plugin).addData(player, discordID, member.getUser().getName());
+            new PlayerDataFileEvents(this.plugin).addData(player, discordID, member.getUser().getName(), plugin.getConfig().getString(plugin.perms.getPrimaryGroup(player)));
             new Playerdatafilemethods(this.plugin).setBoolean(player, player.getUniqueId(), "Linked", true);
             new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftName", player.getName());
             new Playerdatafilemethods(this.plugin).setString(player, player.getUniqueId(), "MinecraftRank", this.plugin.perms.getPrimaryGroup(player));

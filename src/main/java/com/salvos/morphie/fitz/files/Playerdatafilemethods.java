@@ -1,9 +1,11 @@
 package com.salvos.morphie.fitz.files;
 
 import com.salvos.morphie.fitz.Fitz;
+import org.bukkit.Color;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +56,8 @@ public class Playerdatafilemethods {
         return playerFile;
     }
 
+
+
     public File getDiscordFile(String discordID) {
         File playerFile = new File(this.plugin.getDataFolder() + File.separator + "VerifiedUsers", discordID + ".yml");
         FileConfiguration playerCFG = YamlConfiguration.loadConfiguration(playerFile);
@@ -66,6 +70,17 @@ public class Playerdatafilemethods {
             }
         }
         return playerFile;
+    }
+
+    public void setDiscordString(String discordID, String string, String string2) {
+        File file = getDiscordFile(discordID);
+        FileConfiguration fc = YamlConfiguration.loadConfiguration(file);
+        fc.set(string, String.valueOf(string2));
+        try {
+            fc.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setBoolean(Player player, UUID uuid, String string, Boolean b) {

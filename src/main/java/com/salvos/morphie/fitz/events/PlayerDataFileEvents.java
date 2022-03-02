@@ -40,6 +40,7 @@ public class PlayerDataFileEvents implements Listener {
                     pd.set("DiscordName", String.valueOf("null"));
                     pd.set("DiscordId", String.valueOf("null"));
                     pd.set("DiscordRole", String.valueOf("null"));
+                    pd.set("RoleId", String.valueOf("null"));
                     try {
                         pd.save(file);
                     }
@@ -66,7 +67,7 @@ public class PlayerDataFileEvents implements Listener {
         return data;
     }
 
-    public void addData(final Player player, final String discordID, final String discordName) {
+    public void addData(final Player player, final String discordID, final String discordName, final String color) {
         final UUID uuid = player.getUniqueId();
 
         new BukkitRunnable() {
@@ -74,9 +75,10 @@ public class PlayerDataFileEvents implements Listener {
                 File file = getDiscordData(discordID);
                 FileConfiguration pd2 = YamlConfiguration.loadConfiguration(file);
                 if (!pd2.contains("MinecraftName")) {
-                    pd2.set("MinecraftName", String.valueOf(player.getName()));
+                    pd2.set("MinecraftName", player.getName());
                     pd2.set("MinecraftUUID", String.valueOf(uuid));
                     pd2.set("DiscordName", String.valueOf(discordName));
+                    pd2.set("DiscordColor", color);
                     try {
                         pd2.save(file);
                     }
