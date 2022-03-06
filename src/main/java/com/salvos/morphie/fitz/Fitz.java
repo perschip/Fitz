@@ -1,6 +1,7 @@
 package com.salvos.morphie.fitz;
 
 import com.salvos.morphie.fitz.commands.discord.DiscordLinkCommand;
+import com.salvos.morphie.fitz.commands.discord.PingCommand;
 import com.salvos.morphie.fitz.commands.discord.WhoCommand;
 import com.salvos.morphie.fitz.events.discord.DiscordChatEvent;
 import com.salvos.morphie.fitz.events.discord.DiscordJoinEvent;
@@ -14,7 +15,9 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
@@ -32,6 +35,7 @@ import java.util.UUID;
 public class Fitz extends JavaPlugin implements Listener {
 
     private JDA bot;
+    private Guild guild;
     private PlaceholderAPI p;
 
     public Permission perms = null;
@@ -87,11 +91,20 @@ public class Fitz extends JavaPlugin implements Listener {
                     .build();
             bot.awaitReady(); // Blocking guarantees that JDA will be completely loaded.
             System.out.println("Finished Building JDA!");
+            guild = bot.getGuildById(new DiscordMethods(this).getGuild());
             bot.addEventListener(new DiscordChatEvent(this));
             bot.addEventListener(new DiscordJoinEvent(this));
             bot.addEventListener(new DiscordLeaveEvent(this));
             bot.addEventListener(new WhoCommand(this));
             bot.addEventListener(new DiscordLinkCommand(this));
+            bot.addEventListener(new PingCommand(this));
+
+            //Commands: Propagating as the guild.
+            guild.upsertCommand("ping", "Calculate ping of the bot.").queue();
+            guild.upsertCommand("who", "Check who is connected to the MC server.").queue();
+            guild.upsertCommand("link", "Link your MC and Discord accounts!")
+                    .addOption(OptionType.STRING, "mcname", "MC name to link your discord account too")
+                    .queue();
 
             bot.getPresence().setActivity(Activity.playing(getConfig().getString("StatusMessage")));
 
