@@ -25,13 +25,15 @@ Guild: "786248213845377045"
 # The ID of the channel relaying minecraft chat.
 BridgeChannelID: '795167883050352661'
 # The ID of the channel displaying join and leave messages.
-JoinLeaveChannelID: '786248214012887096'
+JoinLeaveChannelID: '951595979243671592'
 # The ID of the information channel. (Server Information)
 InformationChannelID: '802484042233675777'
 # The ID of the rules channel.
 RulesChannelID: '859972898599862343'
 # The ID of the bot commands channel.
 BotCommandsChannelID: '786248214407938052'
+# The ID of the bot commands channel.
+StaffChatChannelID: '786248215535812647'
 
 #============================================================================================================================|
 

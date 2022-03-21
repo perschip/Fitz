@@ -11,8 +11,14 @@ import net.dv8tion.jda.api.requests.restaction.RoleAction;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.mineacademy.chatcontrol.ChatControl;
+import org.mineacademy.chatcontrol.PlayerCache;
+import org.mineacademy.chatcontrol.api.ChatChannelEvent;
+import org.mineacademy.chatcontrol.api.ChatControlAPI;
+import org.mineacademy.chatcontrol.model.Channel;
 
 import java.awt.*;
 
@@ -25,13 +31,15 @@ public class MinecraftChatEvent implements Listener {
     }
 
     // Minecraft to discord channel event.
-    @EventHandler
+    @EventHandler (ignoreCancelled = true, priority = EventPriority.HIGH)
     public void ChatEvent(AsyncPlayerChatEvent e) {
         String msg = e.getMessage();
         Player p = e.getPlayer();
         String name = p.getName();
         String chatFormat = this.plugin.getConfig().getString("MinecraftToDiscordFormat").replace("%RANK%", plugin.chat.getPrimaryGroup(p)).replace("%PLAYER%", name);
         TextChannel channel = this.plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getBridgeId());
+        TextChannel staffChannel = this.plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getStaffId());
+        Channel chcChannel = ChatControlAPI.getPlayerCache(p).getWriteChannel();
         Guild guild = this.plugin.getBot().getGuildById(new DiscordMethods(plugin).getGuild());
         String discordID = new Playerdatafilemethods(plugin).getString(p.getUniqueId(), "DiscordId");
         String rank = plugin.perms.getPrimaryGroup(p);
@@ -40,41 +48,80 @@ public class MinecraftChatEvent implements Listener {
         msg = msg.replace("@everyone", "everyone");
         msg = msg.replace("@here", "here");
 
-        if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "Linked")) {
-            if (!rank.equalsIgnoreCase("nerd")) {
-                if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated")) {
-                    Role role = guild.getRoleById(new Playerdatafilemethods(plugin).getString(p.getUniqueId(),"RoleId"));
-                    Color roleColor = role.getColor();
-                    String getSetColor = new Playerdatafilemethods(plugin).getDiscordString(discordID, "Color");
-                    if (getSetColor != null && roleColor.toString().equalsIgnoreCase(getSetColor)) {
-                        channel.sendMessage(role.getAsMention() + " **»** " + msg).queue();
+        if (chcChannel.getName().equalsIgnoreCase("standard")) {
+            if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "Linked")) {
+                if (!rank.equalsIgnoreCase("nerd")) {
+                    if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated")) {
+                        Role role = guild.getRoleById(new Playerdatafilemethods(plugin).getString(p.getUniqueId(),"RoleId"));
+                        Color roleColor = role.getColor();
+                        String getSetColor = new Playerdatafilemethods(plugin).getDiscordString(discordID, "Color");
+                        if (getSetColor != null && roleColor.toString().equalsIgnoreCase(getSetColor)) {
+                            channel.sendMessage(role.getAsMention() + " **»** " + msg).queue();
+                        } else {
+                            new RankUtils(plugin).updateRank(p);
+                            String newRank = new RankUtils(plugin).getRank(p);
+                            int intValue = Integer.parseInt(this.plugin.getConfig().getString(newRank), 16);
+                            Color aColor = new Color(intValue);
+                            role.getManager().setColor(aColor).complete();
+                            new Playerdatafilemethods(plugin).setDiscordString(discordID, "DiscordColor", aColor.toString());
+                            channel.sendMessage(role.getAsMention() + " **»** " + msg).queue();
+                        }
                     } else {
-                        new RankUtils(plugin).updateRank(p);
-                        String newRank = new RankUtils(plugin).getRank(p);
-                        int intValue = Integer.parseInt(this.plugin.getConfig().getString(newRank), 16);
+                        int intValue = Integer.parseInt(this.plugin.getConfig().getString(rank), 16);
                         Color aColor = new Color(intValue);
-                        role.getManager().setColor(aColor).complete();
+                        RoleAction roleAction1 = guild.createRole();
+                        roleAction1.setName(name);
+                        roleAction1.setColor(aColor);
+                        Role role = roleAction1.complete();
+                        new Playerdatafilemethods(plugin).setString(p,p.getUniqueId(),"RoleId", role.getId());
                         new Playerdatafilemethods(plugin).setDiscordString(discordID, "DiscordColor", aColor.toString());
+                        new Playerdatafilemethods(this.plugin).setBoolean(p, p.getUniqueId(), "DiscordRoleCreated", true);
                         channel.sendMessage(role.getAsMention() + " **»** " + msg).queue();
                     }
                 } else {
-                    int intValue = Integer.parseInt(this.plugin.getConfig().getString(rank), 16);
-                    Color aColor = new Color(intValue);
-                    RoleAction roleAction1 = guild.createRole();
-                    roleAction1.setName(name);
-                    roleAction1.setColor(aColor);
-                    Role role = roleAction1.complete();
-                    new Playerdatafilemethods(plugin).setString(p,p.getUniqueId(),"RoleId", role.getId());
-                    new Playerdatafilemethods(plugin).setDiscordString(discordID, "DiscordColor", aColor.toString());
-                    new Playerdatafilemethods(this.plugin).setBoolean(p, p.getUniqueId(), "DiscordRoleCreated", true);
-                    channel.sendMessage(role.getAsMention() + " **»** " + msg).queue();
+                    new RankUtils(plugin).removeRole(p);
+                    channel.sendMessage(chatFormat + msg).queue();
                 }
             } else {
-                new RankUtils(plugin).removeRole(p);
                 channel.sendMessage(chatFormat + msg).queue();
             }
-        } else {
-            channel.sendMessage(chatFormat + msg).queue();
+        } else if (chcChannel.getName().equalsIgnoreCase("staff") || (String.valueOf(e.getMessage().charAt(0)).equals("?")) && ChatControlAPI.getPlayerCache(p).getChannels().containsKey(chcChannel)) {
+            if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "Linked")) {
+                if (!rank.equalsIgnoreCase("nerd")) {
+                    if (new Playerdatafilemethods(this.plugin).getBoolean(p.getUniqueId(), "DiscordRoleCreated")) {
+                        Role role = guild.getRoleById(new Playerdatafilemethods(plugin).getString(p.getUniqueId(),"RoleId"));
+                        Color roleColor = role.getColor();
+                        String getSetColor = new Playerdatafilemethods(plugin).getDiscordString(discordID, "Color");
+                        if (getSetColor != null && roleColor.toString().equalsIgnoreCase(getSetColor)) {
+                            staffChannel.sendMessage("**STAFF** " + role.getAsMention() + " **»** " + msg).queue();
+                        } else {
+                            new RankUtils(plugin).updateRank(p);
+                            String newRank = new RankUtils(plugin).getRank(p);
+                            int intValue = Integer.parseInt(this.plugin.getConfig().getString(newRank), 16);
+                            Color aColor = new Color(intValue);
+                            role.getManager().setColor(aColor).complete();
+                            new Playerdatafilemethods(plugin).setDiscordString(discordID, "DiscordColor", aColor.toString());
+                            staffChannel.sendMessage("**STAFF** " + role.getAsMention() + " **»** " + msg).queue();
+                        }
+                    } else {
+                        int intValue = Integer.parseInt(this.plugin.getConfig().getString(rank), 16);
+                        Color aColor = new Color(intValue);
+                        RoleAction roleAction1 = guild.createRole();
+                        roleAction1.setName(name);
+                        roleAction1.setColor(aColor);
+                        Role role = roleAction1.complete();
+                        new Playerdatafilemethods(plugin).setString(p,p.getUniqueId(),"RoleId", role.getId());
+                        new Playerdatafilemethods(plugin).setDiscordString(discordID, "DiscordColor", aColor.toString());
+                        new Playerdatafilemethods(this.plugin).setBoolean(p, p.getUniqueId(), "DiscordRoleCreated", true);
+                        staffChannel.sendMessage("**STAFF** " + role.getAsMention() + " **»** " + msg).queue();
+                    }
+                } else {
+                    new RankUtils(plugin).removeRole(p);
+                    staffChannel.sendMessage("**STAFF** " + chatFormat + msg).queue();
+                }
+            } else {
+                staffChannel.sendMessage("**STAFF** " + chatFormat + msg).queue();
+            }
         }
     }
 }

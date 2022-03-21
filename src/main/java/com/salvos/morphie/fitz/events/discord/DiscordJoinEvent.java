@@ -17,16 +17,16 @@ public class DiscordJoinEvent extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent e) {
-        User user = e.getUser();
+        Member member = e.getMember();
         TextChannel welcome = plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getJoinLeaveId());
         TextChannel info = plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getInformationID());
         TextChannel botCommands = plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getBotCommandsID());
         TextChannel rules = plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getRulesID());
 
-        EmbedBuilder eBuilder = new EmbedUtils(plugin).embedBuilder(user, "Welcome!");
-        eBuilder.setDescription("Welcome to Salvos, " + user.getAsMention() + "! If you are in need of any information go ahead and check out " + info.getAsMention() + "!");
-        eBuilder.addField("-", "Beep Boop. Looking for my commands? To get a list of all my commands you can type `!help` in the " + botCommands.getAsMention() + " channel!", false);
-        eBuilder.addField("-", "Lastly, you can find our servers rules within the" + rules.getAsMention() + "channel. Happy Crafting!", false);
+        EmbedBuilder eBuilder = new EmbedUtils(plugin).embedBuilder(member.getUser(), "Welcome!");
+        eBuilder.setDescription("Welcome to Salvos, " + member.getAsMention() + "! If you are in need of any information go ahead and check out " + info.getAsMention() + "!");
+        eBuilder.addField("-", "Beep Boop. Looking for my commands? To get a list of all my commands you can type `/help` in the " + botCommands.getAsMention() + " channel!", false);
+        eBuilder.addField("-", "Lastly, you can find our servers rules within the " + rules.getAsMention() + " channel. Happy Crafting!", false);
         MessageEmbed embed = eBuilder.build();
         welcome.sendMessageEmbeds(embed).queue();
     }

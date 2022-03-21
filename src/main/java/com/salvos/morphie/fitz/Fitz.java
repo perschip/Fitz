@@ -18,6 +18,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
@@ -88,6 +89,7 @@ public class Fitz extends JavaPlugin implements Listener {
     private void startBot() {
         try {
             this.bot = JDABuilder.createDefault(getConfig().getString("Token"))
+                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
                     .build();
             bot.awaitReady(); // Blocking guarantees that JDA will be completely loaded.
             System.out.println("Finished Building JDA!");
@@ -100,6 +102,7 @@ public class Fitz extends JavaPlugin implements Listener {
             bot.addEventListener(new PingCommand(this));
 
             //Commands: Propagating as the guild.
+            guild.upsertCommand("help", "Show the command help for Fitz.").queue();
             guild.upsertCommand("ping", "Calculate ping of the bot.").queue();
             guild.upsertCommand("who", "Check who is connected to the MC server.").queue();
             guild.upsertCommand("link", "Link your MC and Discord accounts!")

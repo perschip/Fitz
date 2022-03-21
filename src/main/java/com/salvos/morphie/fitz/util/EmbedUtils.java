@@ -17,7 +17,7 @@ public class EmbedUtils {
     public EmbedBuilder embedBuilder(User user, String title) {
         EmbedBuilder eBuilder = new EmbedBuilder();
 
-        eBuilder.setAuthor(plugin.getConfig().getString("Header").replace("TITLE", title));
+        eBuilder.setAuthor(plugin.getConfig().getString("Header").replace("TITLE", title), plugin.getConfig().getString("Image"));
         eBuilder.setColor(Color.decode(plugin.getConfig().getString("Color")));
         eBuilder.setFooter(plugin.getConfig().getString("Footer"), plugin.getConfig().getString("Image"));
         return eBuilder;

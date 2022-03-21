@@ -1,6 +1,7 @@
 package com.salvos.morphie.fitz.events.discord;
 
 import com.salvos.morphie.fitz.Fitz;
+import com.salvos.morphie.fitz.util.DiscordMethods;
 import com.salvos.morphie.fitz.util.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -20,10 +21,10 @@ public class DiscordLeaveEvent extends ListenerAdapter {
     @Override
     public void onGuildMemberRemove(GuildMemberRemoveEvent e) {
         User user = e.getUser();
-        TextChannel leave = this.plugin.getBot().getTextChannelById("786248214012887098");
+        TextChannel leave = this.plugin.getBot().getTextChannelById(new DiscordMethods(plugin).getJoinLeaveId());
 
-        EmbedBuilder eBuilder = new EmbedUtils(plugin).embedBuilder(user, "Bye!");
-        eBuilder.addField("-", "Farewell, " + user.getName() + "!", false);
+        EmbedBuilder eBuilder = new EmbedUtils(plugin).embedBuilder(user, "Later on!");
+        eBuilder.addField("-", user.getName() + " has left the server!", false);
         MessageEmbed embed = eBuilder.build();
 
         leave.sendMessageEmbeds(embed).queue();

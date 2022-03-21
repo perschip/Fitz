@@ -2,10 +2,13 @@ package com.salvos.morphie.fitz.util;
 
 import com.salvos.morphie.fitz.Fitz;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.mineacademy.chatcontrol.api.ChatControlAPI;
+import org.mineacademy.chatcontrol.model.Channel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +43,11 @@ public class DiscordMethods {
         }
     }
 
+    // Check Message ChatControl
+    public String checkChatControlMessage(Player player, String message) {
+        return ChatControlAPI.checkMessage(player, message).getMessage();
+    }
+
     // Get the ID of the Guild from the config
     @Getter
     public String getGuild() {
@@ -49,6 +57,11 @@ public class DiscordMethods {
     @Getter
     public String getBridgeId() {
         return plugin.getConfig().getString("BridgeChannelID");
+    }
+    // Get the ID of the discord channel used for the staff discord -> staff minecraft chat from the config
+    @Getter
+    public String getStaffId() {
+        return plugin.getConfig().getString("StaffChatChannelID");
     }
     // Get the ID of the discord channel used for the discord join and leave messages
     @Getter
