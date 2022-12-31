@@ -9,7 +9,3 @@ commands:
     description: Main command for the in-game.
     usage: /<command>
     aliases: [fitz]
-  verify:
-    description: Main command to verify discord account.
-    usage: /<command>
-    aliases: [dv]

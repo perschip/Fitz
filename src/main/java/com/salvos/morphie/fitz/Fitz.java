@@ -50,7 +50,6 @@ public class Fitz extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        getCommand("verify").setExecutor(new Commands(this));
         getCommand("discord").setExecutor(new Commands(this));
         this.mc = new MinecraftChatEvent(this);
         this.mj = new MinecraftJoinEvent(this);
