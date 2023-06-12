@@ -13,7 +13,7 @@
 
 # Bot Settings:
 # The Discord Bot User Token. (Create a bot at - https://discordapp.com/developers/applications)
-Token: "MzYwNzgzNzkzNjQ2MjA2OTg2.WcUUFw.mu3ME_Fr26bLDgfh0Kbe6CfQgI4"
+Token: "0"
 # What the bots status is within the discord member list. Types: PLAYING, WATCHING, STREAMING
 StatusMessage: "on SMPULTD.GG"
 
