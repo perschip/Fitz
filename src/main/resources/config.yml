@@ -21,19 +21,19 @@ StatusMessage: "on SMPULTD.GG"
 
 # Discord Guild + Channel ID's
 # The ID of the discord server Fitz is currently using.
-Guild: "786248213845377045"
+Guild: "0"
 # The ID of the channel relaying minecraft chat.
-BridgeChannelID: '930165288912175238'
+BridgeChannelID: '0'
 # The ID of the channel displaying join and leave messages.
-JoinLeaveChannelID: '951595979243671592'
+JoinLeaveChannelID: '0'
 # The ID of the information channel. (Server Information)
-InformationChannelID: '802484042233675777'
+InformationChannelID: '0'
 # The ID of the rules channel.
-RulesChannelID: '859972898599862343'
+RulesChannelID: '0'
 # The ID of the bot commands channel.
-BotCommandsChannelID: '786248214407938052'
+BotCommandsChannelID: '0'
 # The ID of the bot commands channel.
-StaffChatChannelID: '786248215535812647'
+StaffChatChannelID: '0'
 
 #============================================================================================================================|
 
