@@ -55,14 +55,5 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.11.1" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: org.mineacademy.chatcontrol:ChatControl:10.9.10">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/main/resources/ChatControl-Red-10.9.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
   </component>
 </module>

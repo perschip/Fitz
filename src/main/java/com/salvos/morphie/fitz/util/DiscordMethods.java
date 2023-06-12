@@ -2,16 +2,17 @@ package com.salvos.morphie.fitz.util;
 
 import com.salvos.morphie.fitz.Fitz;
 import jdk.nashorn.internal.objects.annotations.Getter;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.mineacademy.chatcontrol.api.ChatControlAPI;
-import org.mineacademy.chatcontrol.model.Channel;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DiscordMethods {
 
@@ -34,18 +35,28 @@ public class DiscordMethods {
         int onlinePlayers = Bukkit.getOnlinePlayers().size();
         int offlinePlayers = Bukkit.getOfflinePlayers().length;
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
         if (type.equalsIgnoreCase("UPDATE")) {
-            String format = plugin.getConfig().getString("BridgeTopicFormat").replace("TYPE", "Server Online").replace("JOINS", ""+(onlinePlayers+offlinePlayers)).replace("PLAYERS", pl.toString());
+            String format = plugin.getConfig().getString("BridgeTopicFormat").replace("TIME", now.toString()).replace("JOINS", ""+(onlinePlayers+offlinePlayers)).replace("PLAYERS", pl.toString());
             bridge.getManager().setTopic(format).queue();
         } else {
-            String format = plugin.getConfig().getString("BridgeTopicFormat").replace("TYPE", "Server Offline").replace("JOINS", ""+(onlinePlayers+offlinePlayers)).replace("PLAYERS", pl.toString());
+            String format = plugin.getConfig().getString("BridgeTopicFormat").replace("TIME", now.toString()).replace("JOINS", ""+(onlinePlayers+offlinePlayers)).replace("PLAYERS", pl.toString());
             bridge.getManager().setTopic(format).queue();
         }
     }
 
-    // Check Message ChatControl
-    public String checkChatControlMessage(Player player, String message) {
-        return ChatControlAPI.checkMessage(player, message).getMessage();
+    int MINUTES = 10; // The delay in minutes
+    public void timer() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() { // Function runs every MINUTES minutes.
+                // Run the code you want here
+                setTopic("UPDATE");
+            }
+        }, 0, 1000 * 60 * MINUTES);
     }
 
     // Get the ID of the Guild from the config

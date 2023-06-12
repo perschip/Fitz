@@ -15,7 +15,7 @@
 # The Discord Bot User Token. (Create a bot at - https://discordapp.com/developers/applications)
 Token: "MzYwNzgzNzkzNjQ2MjA2OTg2.WcUUFw.mu3ME_Fr26bLDgfh0Kbe6CfQgI4"
 # What the bots status is within the discord member list. Types: PLAYING, WATCHING, STREAMING
-StatusMessage: "on Salvos.GG"
+StatusMessage: "on SMPULTD.GG"
 
 #============================================================================================================================|
 
@@ -23,7 +23,7 @@ StatusMessage: "on Salvos.GG"
 # The ID of the discord server Fitz is currently using.
 Guild: "786248213845377045"
 # The ID of the channel relaying minecraft chat.
-BridgeChannelID: '795167883050352661'
+BridgeChannelID: '930165288912175238'
 # The ID of the channel displaying join and leave messages.
 JoinLeaveChannelID: '951595979243671592'
 # The ID of the information channel. (Server Information)
@@ -43,7 +43,7 @@ MinecraftToDiscordFormat: '**[**%RANK%**]** *%PLAYER%* **»** '
 # How the messages will appear in the minecraft chat when sent from the discord channel.
 DiscordToMinecraftFormat: '&8[&bD&8] &e%vault_rankprefix%%essentials_nickname% &8» &fMESSAGE'
 # Format for the bridge channel topic.
-BridgeTopicFormat: '[:satellite:] **TYPE** **|** **Unique Joins:** *JOINS* **|** **Players:** *PLAYERS*'
+BridgeTopicFormat: '[:satellite:] **TIME** **|** **Unique Joins:** *JOINS* **|** **Players:** *PLAYERS*'
 # Message sent when the bot is loaded.
 BotLoaded: ':ballot_box_with_check: **Server Started.**'
 # Message sent when the bot is unloaded.
@@ -61,13 +61,13 @@ PlayerDeathMessage: ':coffin: ***%PLAYER%*** *DEATH_MESSAGE*'
 
 # Default Embed Settings: (Things for the fancy messages fitz can make!)
 # Imgur Link of logo
-Image: 'https://i.imgur.com/tHHcBOY.png'
+Image: 'https://i.imgur.com/NlmYZ9K.png'
 # Title or default header of each embeded message.
-Header: 'Salvos GG » TITLE'
+Header: 'SMPULTD.GG » TITLE'
 # Footer of each embeded message.
-Footer: 'All rights reserved, Salvos GG 2022 ↠'
+Footer: 'All rights reserved, SMPULTD.GG 2023 ↠'
 # Outline color of the embeded messages. (Hex Code)
-Color: '#5555FF'
+Color: '#00AA00'
 
 #============================================================================================================================|
 

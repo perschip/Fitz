@@ -33,6 +33,5 @@ public class MinecraftJoinEvent implements Listener {
         } else {
             channel.sendMessage(plugin.getConfig().getString("PlayerFirstJoin").replace("%FITZ%", role.getAsMention()).replace("%PLAYER%", name)).queue();
         }
-        new DiscordMethods(plugin).setTopic("UPDATE");
     }
 }

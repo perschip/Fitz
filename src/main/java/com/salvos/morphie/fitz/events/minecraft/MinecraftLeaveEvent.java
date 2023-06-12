@@ -25,6 +25,5 @@ public class MinecraftLeaveEvent implements Listener {
         if (!p.hasPermission("Fitz.silentLeave")) {
             channel.sendMessage(plugin.getConfig().getString("PlayerLeave").replace("%PLAYER%", name)).queue();
         }
-        new DiscordMethods(plugin).setTopic("UPDATE");
     }
 }

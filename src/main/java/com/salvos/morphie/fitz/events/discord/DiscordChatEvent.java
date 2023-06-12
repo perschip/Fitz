@@ -13,7 +13,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.mineacademy.chatcontrol.settings.Settings;
 
 import java.util.UUID;
 
@@ -43,14 +42,9 @@ public class DiscordChatEvent extends ListenerAdapter {
             Player player = Bukkit.getPlayer(getUUID);
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(getUUID);
             String format = plugin.getConfig().getString("DiscordToMinecraftFormat").replace("MESSAGE", message);
-            if (player != null && player.isOnline()) {
-                format = PlaceholderAPI.setPlaceholders(player, new DiscordMethods(plugin).checkChatControlMessage(player, format));
-            } else {
-                format = PlaceholderAPI.setPlaceholders(offlinePlayer, new DiscordMethods(plugin).checkChatControlMessage(offlinePlayer.getPlayer(), format));
-            }
             Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&',format));
         } else {
-            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bD&8] &7" + userName + " &8» &f" + new DiscordMethods(plugin).checkChatControlMessage(null, message)));
+            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bD&8] &7" + userName + " &8» &f" + message));
         }
     }
 }

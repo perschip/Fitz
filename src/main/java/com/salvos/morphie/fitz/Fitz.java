@@ -69,6 +69,8 @@ public class Fitz extends JavaPlugin implements Listener {
         //Start Fitz
         startBot();
 
+        new DiscordMethods(this).timer();
+
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[----------[&3Fitz&8]----------]"));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&bBot&8: &aOnline"));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&bPlugin Status&8: &aEnabled"));

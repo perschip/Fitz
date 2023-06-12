@@ -8,7 +8,7 @@
     <artifactId>Fitz</artifactId>
     <version>1.3-ALPHA</version>
     <name>Fitz</name>
-    <description>A discord bot for the Salvos MC Server/Discord.</description>
+    <description>A discord bot for the SMPULTD.GG Server/Discord.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -69,14 +69,6 @@
       <artifactId>placeholderapi</artifactId>
       <version>2.11.1</version>
       <scope>provided</scope>
-    </dependency>
-    <!-- ChatControl-Red -->
-    <dependency>
-      <groupId>org.mineacademy.chatcontrol</groupId>
-      <artifactId>ChatControl</artifactId>
-      <version>10.9.10</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/ChatControl-Red-10.9.10.jar</systemPath>
     </dependency>
   </dependencies>
 
